@@ -15,7 +15,7 @@ jobs:
       - name: Cloning Sources and Toolchain
         run: |
           cd /home/runner/work
-          git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource.git -b sirius-q-oss /home/runner/work/Sirius_kernel
+          git clone --depth=1 https://github.com/MiCode/Xiaomi_Kernel_OpenSource -b sirius-q-oss Sirius_kernel
           git clone --depth=1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git -b lineage-18.1  /home/runner/work/aarch64-linux-android-4.9
           
           git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r445002 --depth=1 --single-branch --no-tags -b 12.0 /home/runner/work/clang
@@ -49,7 +49,7 @@ jobs:
 
           rm -rf out
           mkdir out
-          make -j$(nproc --all) CC=clang O=out ARCH=arm64 LLVM=1 LLVM_IAS=1 CLANG_TRIPLE=aarch64-linux-gnu- /home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android- sirius_user_defconfig
+          make -j$(nproc --all) CC=clang O=out ARCH=arm64 LLVM=1 LLVM_IAS=1 CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=/home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android- sirius_user_defconfig
           make -j$(nproc --all) CC=clang O=out ARCH=arm64 LD=ld.lld LLVM=1 LLVM_IAS=1 CROSS_COMPILE=/home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android- export CROSS_COMPILE_ARM32=/home/runner/work/arm-linux-androideabi-4.9/binarm-linux-androideabi-
           
           
