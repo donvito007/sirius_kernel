@@ -26,8 +26,9 @@ jobs:
       - name: Compiling Kernel
         run: |
           cd /home/runner/work/Sirius_kernel
-          cp -r /home/runner/work/KernelSU/kernel drivers/kernelsu
-          echo "obj-y += kernelsu/" >> drivers/Makefile
+          #cp -r /home/runner/work/KernelSU/kernel drivers/kernelsu
+          #echo "obj-y += kernelsu/" >> drivers/Makefile
+          curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
           echo 'CONFIG_KPROBES=y' >> arch/arm64/configs/sirius_user_defconfig
           echo 'CONFIG_HAVE_KPROBES=y' >> arch/arm64/configs/sirius_user_defconfig
           echo 'CONFIG_KPROBE_EVENTS=y' >> arch/arm64/configs/sirius_user_defconfig
