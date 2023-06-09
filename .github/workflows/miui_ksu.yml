@@ -41,15 +41,22 @@ jobs:
 
           export ARCH=arm64
           export SUBARCH=arm64
+          export DTC_EXT=dtc
           
           export CLANG_TRIPLE=aarch64-linux-gnu
           export CROSS_COMPILE=/home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android-
           export CROSS_COMPILE_ARM32=/home/runner/work/arm-linux-androideabi-4.9/binarm-linux-androideabi-
 
-          make O=out sirius_user_defconfig
-          make -j $(nproc) \
-              O="$output_dir" \
-              CC=clang
+          rm -rf out
+          mkdir out
+          make -j$(nproc --all) CC=clang O=out ARCH=arm64 LLVM=1 LLVM_IAS=1 CLANG_TRIPLE=aarch64-linux-gnu- /home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android- sirius_user_defconfig
+          make -j$(nproc --all) CC=clang O=out ARCH=arm64 LD=ld.lld LLVM=1 LLVM_IAS=1 CROSS_COMPILE=/home/runner/work/aarch64-linux-android-4.9/bin/aarch64-linux-android- export CROSS_COMPILE_ARM32=/home/runner/work/arm-linux-androideabi-4.9/binarm-linux-androideabi-
+          
+          
+          # make O=out sirius_user_defconfig
+          # make -j $(nproc) \
+          #    O="$output_dir" \
+          #    CC=clang
 
       - name: Creating Config Info
         run: |
